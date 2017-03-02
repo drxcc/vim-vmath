@@ -37,7 +37,7 @@ function! VMATH_YankAndAnalyse ()
 endfunction
 
 " What to consider a number...
-let s:NUM_PAT = '^[+-]\?\d\+\%([.]\d\+\)\?\([eE][+-]\?\d\+\)\?$'
+let s:NUM_PAT = '^[+-]\?\d\+\%([.]\d\+\)\?\([eE][+-]\?\d\+\)\?'
 
 " How widely to space the report components...
 let s:REPORT_GAP = 3  "spaces between components
@@ -46,7 +46,7 @@ let s:REPORT_GAP = 3  "spaces between components
 function! VMATH_Analyse ()
     " Extract data from selection...
     let selection = getreg('')
-    let raw_numbers = filter(split(selection), 'v:val =~ s:NUM_PAT')
+    let raw_numbers = filter(split(selection,'[^.\+\-0-9eE]\+'), 'v:val =~ s:NUM_PAT')
     let numbers = map(copy(raw_numbers), 'str2float(v:val)')
 
     " Results include a newline if original selection did...
